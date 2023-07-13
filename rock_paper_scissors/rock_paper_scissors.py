@@ -14,18 +14,28 @@ class RockPaperScissors():
         }
 
     def get_comp_hand(self):
-        hand = randint(-1, 1)
-        return hand
+        hand_val = randint(-1, 1)
+        return ('comp', hand_val)
 
     def get_user_hand(self):
         while True:
             hand = input('Choose Rock (R), Paper (P), or Scissors (S): ').lower()
             if hand == 'r':
-                return self.hands['rock']
+                hand_val =  self.hands['rock']
+                break
             elif hand == 'p':
-                return self.hands['paper']
+                hand_val =  self.hands['paper']
+                break
             elif hand == 's':
-                return self.hands['scissors']
+                hand_val =  self.hands['scissors']
+                break
             else:
                 print('Invalid input. Please type in R for Rock, P for Paper, or S for Scissors.')
-        
+        return ('user', hand_val)
+
+    def get_round_winner(self, comp_hand, user_hand):
+        hands = [comp_hand, user_hand]
+        if abs(comp_hand[1]) == abs(user_hand[1]):
+            return min(hands, key=lambda item:item[1])[0]
+        else:
+            return max(hands, key=lambda item: item[1])[0]
