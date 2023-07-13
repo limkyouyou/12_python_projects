@@ -14,23 +14,26 @@ class Madlib:
                 word_list.append(word)
             self.inputs[item[0].lower()] = word_list
 
-    def get_word(self, word_type: str):
-        
+    def get_word_gen(self, word_type: str):
         word_list = self.inputs.get(word_type, None)
-        word = ''
-        if word_list:
-            word = word_list.pop()
-        return word if word else 'n/a'
+        return (word for word in word_list) if word_list else None
     
     def concat(self):
+        adj = self.get_word_gen('adjective')
+        noun = self.get_word_gen('noun')
+        place = self.get_word_gen('place')
+        vehicle = self.get_word_gen('vehicle')
+        pl_noun = self.get_word_gen('plural noun')
+        verb = self.get_word_gen('verb')
+        job = self.get_word_gen('job')
         madlibs = (
-            f"Star Wars is a {self.get_word('adjective')} {self.get_word('noun')} of {self.get_word('adjective')} versus evil in a/an {self.get_word('place')} far far away.\n"
-            f"There are {self.get_word('adjective')} battles between {self.get_word('adjective')} {self.get_word('vehicle')} in {self.get_word('adjective')} space"
-            f" and {self.get_word('adjective')} duels with {self.get_word('plural noun')} called {self.get_word('adjective')} sabers.\n"
-            f"{self.get_word('plural noun').capitalize()} called 'droids' are helpers and {self.get_word('plural noun')} to the heroes.\n"
-            f"A {self.get_word('adjective')} power called The {self.get_word('noun').capitalize()} {self.get_word('verb')}s people to do {self.get_word('adjective')} things,"
-            f" like {self.get_word('verb')} {self.get_word('plural noun')}.\n"
-            f"The Jedi {self.get_word('job')} use The Force for the {self.get_word('adjective')} side and the Sith {self.get_word('verb')} it for the {self.get_word('adjective')} side."
+            f"Star Wars is a {next(adj) if adj else 'n/a'} {next(noun) if noun else 'n/a'} of {next(adj) if adj else 'n/a'} versus evil in a/an {next(place) if place else 'n/a'} far far away.\n"
+            f"There are {next(adj) if adj else 'n/a'} battles between {next(adj) if adj else 'n/a'} {next(vehicle) if vehicle else 'n/a'} in {next(adj) if adj else 'n/a'} space"
+            f" and {next(adj) if adj else 'n/a'} duels with {next(pl_noun) if pl_noun else 'n/a'} called {next(adj) if adj else 'n/a'} sabers.\n"
+            f"{next(pl_noun).capitalize() if pl_noun else 'n/a'} called 'droids' are helpers and {next(pl_noun) if pl_noun else 'n/a'} to the heroes.\n"
+            f"A {next(adj) if adj else 'n/a'} power called The {next(noun).title() if noun else 'n/a'} {next(verb) if verb else 'n/a'}s people to do {next(adj) if adj else 'n/a'} things,"
+            f" like {next(verb) if verb else 'n/a'} {next(pl_noun) if pl_noun else 'n/a'}.\n"
+            f"The Jedi {next(job) if job else 'n/a'} use The Force for the {next(adj) if adj else 'n/a'} side and the Sith {next(verb) if verb else 'n/a'} it for the {next(adj) if adj else 'n/a'} side."
         )
         return madlibs
         
