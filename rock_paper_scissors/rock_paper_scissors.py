@@ -1,8 +1,8 @@
 from random import randint
 
 class RockPaperScissors():
-    def __init__(self, rounds: int, ):
-        self.rounds = rounds
+    def __init__(self, ttl_rounds: int, ):
+        self.ttl_rounds = ttl_rounds
         self.hands = {
             'rock': -1,
             'paper': 0,
