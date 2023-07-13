@@ -19,7 +19,6 @@ class RockPaperScissors():
 
     def get_user_hand(self):
         while True:
-            print()
             hand = input('Choose Rock (R), Paper (P), or Scissors (S): ').lower()
             if hand == 'r':
                 hand_val =  self.hands['rock']
@@ -32,13 +31,14 @@ class RockPaperScissors():
                 break
             else:
                 print('Invalid input. Please type in R for Rock, P for Paper, or S for Scissors.')
+                print()
         return ('user', hand_val)
 
     def get_round_winner(self, comp_hand, user_hand):
         hands = [comp_hand, user_hand]
-        if abs(comp_hand[1]) == abs(user_hand[1]):
-            return min(hands, key=lambda item:item[1])[0]
-        elif comp_hand[1] != user_hand[1]:
+        if comp_hand[1] != user_hand[1]:
+            if abs(comp_hand[1]) == abs(user_hand[1]):
+                return min(hands, key=lambda item:item[1])[0]
             return max(hands, key=lambda item: item[1])[0]
         return None
         
@@ -72,12 +72,14 @@ class RockPaperScissors():
         print()
         print(f'Let\'s play best out of {self.ttl_rounds} - Rock, Paper, and Scissors!')
         while True:
+            print()
+            print(f'Round {round_played + 1}')
             comp_hand = self.get_comp_hand()
             user_hand = self.get_user_hand()
             comp_hand_str = self.get_hand_string(comp_hand[1])
             user_hand_str = self.get_hand_string(user_hand[1])
             print()
-            print(f'Computer -> {comp_hand_str} : {user_hand_str} <- User')
+            print(f'Computer -> {comp_hand_str.capitalize()} : {user_hand_str.capitalize()} <- User')
             round_winner = self.get_round_winner(comp_hand=comp_hand, user_hand=user_hand)
             if round_winner:
                 print(f'This round winner is the {round_winner.capitalize()}!')
@@ -90,7 +92,11 @@ class RockPaperScissors():
             print(f'The current score is Computer - {self.score["computer"]} : {self.score["user"]} - User ')
             if res:
                 print()
-                print(f'End of game! The winner is the {res[0]} with {res[1]} points!')
+                print(f'End of game! ', end='')
+                if res[0] != 'tie':
+                    print(f'The winner is the {res[0].capitalize()} with {res[1]} points!')
+                else:
+                    print('The game ends with a tie!')
                 break
 
 rps_game = RockPaperScissors(5)
