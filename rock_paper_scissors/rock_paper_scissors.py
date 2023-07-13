@@ -1,3 +1,4 @@
+from random import randint
 
 class RockPaperScissors():
     def __init__(self, rounds: int, ):
@@ -12,4 +13,7 @@ class RockPaperScissors():
             'user': 0,
         }
 
-    
+    def get_comp_hand(self):
+        hand = randint(-1, 1)
+        return hand
+        
