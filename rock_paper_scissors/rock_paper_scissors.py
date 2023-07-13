@@ -19,6 +19,7 @@ class RockPaperScissors():
 
     def get_user_hand(self):
         while True:
+            print()
             hand = input('Choose Rock (R), Paper (P), or Scissors (S): ').lower()
             if hand == 'r':
                 hand_val =  self.hands['rock']
@@ -41,7 +42,7 @@ class RockPaperScissors():
             return max(hands, key=lambda item: item[1])[0]
         
     def get_score(self):
-        return [('comp', self.score['comp']), ('user', self.score['user'])]
+        return [('computer', self.score['comp']), ('user', self.score['user'])]
 
     def check_game_result(self, played):
         scores = self.get_score()
@@ -50,9 +51,30 @@ class RockPaperScissors():
             if comp[1] == user[1]:
                 return ('tie', user[1])
             else:
-                return max(scores, key=lambda item:item[1])[0]
+                return max(scores, key=lambda item:item[1])
         elif comp[1] == 3:
             return comp
         elif user[1] == 3:
             return user
         return None
+    
+    def execute(self):
+        round_played = 0
+        print()
+        print(f'Let\'s play best out of {self.ttl_rounds} - Rock, Paper, and Scissors!')
+        while True:
+            comp_hand = self.get_comp_hand()
+            user_hand = self.get_user_hand()
+            round_winner = self.get_round_winner(comp_hand=comp_hand, user_hand=user_hand)
+            self.score[round_winner] += 1
+            round_played += 1
+            res = self.check_game_result(played=round_played)
+            print()
+            print(f'The current score is Computer - {self.score["comp"]} : {self.score["user"]} - User ')
+            if res:
+                print()
+                print(f'End of game! The winner is the {res[0]} with {res[1]} points!')
+                break
+
+rps_game = RockPaperScissors(5)
+rps_game.execute()
