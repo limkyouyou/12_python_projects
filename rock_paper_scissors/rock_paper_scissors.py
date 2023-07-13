@@ -58,6 +58,14 @@ class RockPaperScissors():
             return user
         return None
     
+    def get_hand_string(self, hand_val):
+        hand_string = {
+            -1: 'rock',
+            0: 'paper',
+            1: 'scissors,'
+        }
+        return hand_string[hand_val]
+    
     def execute(self):
         round_played = 0
         print()
@@ -70,6 +78,9 @@ class RockPaperScissors():
             round_played += 1
             res = self.check_game_result(played=round_played)
             print()
+            comp_hand_str = self.get_hand_string(comp_hand[1])
+            user_hand_str = self.get_hand_string(user_hand[1])
+            print(f'Computer - {comp_hand_str} : {user_hand_str} - User')
             print(f'The current score is Computer - {self.score["comp"]} : {self.score["user"]} - User ')
             if res:
                 print()
