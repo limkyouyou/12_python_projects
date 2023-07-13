@@ -9,13 +9,13 @@ class RockPaperScissors():
             'scissors': 1,
         }
         self.score = {
-            'comp': 0,
+            'computer': 0,
             'user': 0,
         }
 
     def get_comp_hand(self):
         hand_val = randint(-1, 1)
-        return ('comp', hand_val)
+        return ('computer', hand_val)
 
     def get_user_hand(self):
         while True:
@@ -38,11 +38,12 @@ class RockPaperScissors():
         hands = [comp_hand, user_hand]
         if abs(comp_hand[1]) == abs(user_hand[1]):
             return min(hands, key=lambda item:item[1])[0]
-        else:
+        elif comp_hand[1] != user_hand[1]:
             return max(hands, key=lambda item: item[1])[0]
+        return None
         
     def get_score(self):
-        return [('computer', self.score['comp']), ('user', self.score['user'])]
+        return [('computer', self.score['computer']), ('user', self.score['user'])]
 
     def check_game_result(self, played):
         scores = self.get_score()
@@ -73,15 +74,20 @@ class RockPaperScissors():
         while True:
             comp_hand = self.get_comp_hand()
             user_hand = self.get_user_hand()
+            comp_hand_str = self.get_hand_string(comp_hand[1])
+            user_hand_str = self.get_hand_string(user_hand[1])
+            print()
+            print(f'Computer -> {comp_hand_str} : {user_hand_str} <- User')
             round_winner = self.get_round_winner(comp_hand=comp_hand, user_hand=user_hand)
-            self.score[round_winner] += 1
+            if round_winner:
+                print(f'This round winner is the {round_winner.capitalize()}!')
+                self.score[round_winner] += 1
+            else:
+                print('This round is a tie!')
             round_played += 1
             res = self.check_game_result(played=round_played)
             print()
-            comp_hand_str = self.get_hand_string(comp_hand[1])
-            user_hand_str = self.get_hand_string(user_hand[1])
-            print(f'Computer - {comp_hand_str} : {user_hand_str} - User')
-            print(f'The current score is Computer - {self.score["comp"]} : {self.score["user"]} - User ')
+            print(f'The current score is Computer - {self.score["computer"]} : {self.score["user"]} - User ')
             if res:
                 print()
                 print(f'End of game! The winner is the {res[0]} with {res[1]} points!')
