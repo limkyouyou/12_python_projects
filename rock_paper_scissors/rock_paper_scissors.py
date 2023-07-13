@@ -39,3 +39,20 @@ class RockPaperScissors():
             return min(hands, key=lambda item:item[1])[0]
         else:
             return max(hands, key=lambda item: item[1])[0]
+        
+    def get_score(self):
+        return [('comp', self.score['comp']), ('user', self.score['user'])]
+
+    def check_game_result(self, played):
+        scores = self.get_score()
+        comp, user = scores
+        if played == self.ttl_rounds:
+            if comp[1] == user[1]:
+                return ('tie', user[1])
+            else:
+                return max(scores, key=lambda item:item[1])[0]
+        elif comp[1] == 3:
+            return comp
+        elif user[1] == 3:
+            return user
+        return None
