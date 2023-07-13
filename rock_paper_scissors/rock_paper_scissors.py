@@ -7,3 +7,9 @@ class RockPaperScissors():
             'paper': 0,
             'scissors': 1,
         }
+        self.score = {
+            'comp': 0,
+            'user': 0,
+        }
+
+    
