@@ -35,4 +35,10 @@ class Hangman():
                     print('You\'ve already picked that letter. Plese try another letter.')
                 else:
                     return char
+                
+    def check_char(self, char):
+        if char in self.target_word:
+            return True
+        self.user_chars.append(char)
+        return False
             
