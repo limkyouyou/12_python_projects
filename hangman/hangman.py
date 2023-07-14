@@ -25,6 +25,8 @@ class Hangman():
     
     def pick_word(self):
         self.target_word = list(choice(self.eng_words))
+        n = len(self.target_word)
+        self.correct_chars = ['_'] * n
     
     def char_input(self):
         while True:
@@ -43,6 +45,10 @@ class Hangman():
         self.user_chars.append(char)
         return False
     
-    def check_score(self):
-        
+    def is_correct_char(self, char):
+        for i in range(len(self.target_word)):
+            if self.target_word[i] == char:
+                self.correct_chars[i] = char
+
+    
             
