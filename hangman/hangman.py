@@ -15,8 +15,8 @@ class Hangman():
           ]
         self.eng_words = []
         self.user_chars = []
-        self.target_word = ['a', 'p', 'p', 'l', 'e']
-        self.correct_chars = ['_'] * len(self.target_word)
+        self.target_word = None
+        self.correct_chars = None
     
     def get_words_list(self):
         with open(self.filename) as file:
@@ -35,7 +35,7 @@ class Hangman():
                 print('>> That is not a valid letter. Please try again')
                 print()
             else:
-                if char in self.user_chars:
+                if char in self.user_chars or char in self.correct_chars:
                     print('>> You\'ve already picked that letter. Plese try another letter.')
                     print()
                 else:
@@ -58,8 +58,9 @@ class Hangman():
             print('>> you\'ve won the game!')
             return True
         if len(self.hangman_pic) == 1:
+            target = ''.join(self.target_word)
             print()
-            print('>> You lost! Try again next time.')
+            print(f'>> You lost! Try again next time. The correct word was "{target}"')
             return True
         return False
 
@@ -76,10 +77,10 @@ class Hangman():
         print()
 
     def execute(self):
-        #self.get_words_list()
-        #self.pick_word()
+        self.get_words_list()
+        self.pick_word()
         print()
-        print('Welcome to Hangman! Let\'s play a game.')
+        print('>> Welcome to Hangman! Let\'s play a game.')
         while True:
             self.display_round()
             if self.check_score():
