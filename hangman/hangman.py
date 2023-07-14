@@ -16,7 +16,6 @@ class Hangman():
         self.eng_words = []
         self.user_chars = []
         self.target_word = None
-        self.score = 0
     
     def get_words_list(self):
         with open(self.filename) as file:
