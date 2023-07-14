@@ -57,7 +57,7 @@ class Hangman():
             print()
             print('>> you\'ve won the game!')
             return True
-        if not self.hangman_pic:
+        if len(self.hangman_pic) == 1:
             print()
             print('>> You lost! Try again next time.')
             return True
@@ -82,6 +82,8 @@ class Hangman():
         print('Welcome to Hangman! Let\'s play a game.')
         while True:
             self.display_round()
+            if self.check_score():
+                break
             char = self.char_input()
             if self.check_char(char):
                 self.is_correct_char(char)
@@ -89,8 +91,6 @@ class Hangman():
             else:
                 self.hangman_pic.pop()
                 print('>> That is incorrect.')
-            if self.check_score():
-                break
             
 
 play_hangman = Hangman('english-nouns.txt')
