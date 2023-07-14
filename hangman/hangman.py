@@ -50,5 +50,12 @@ class Hangman():
             if self.target_word[i] == char:
                 self.correct_chars[i] = char
 
-    
+    def check_score(self):
+        if self.target_word == self.correct_chars:
+            print('you\'ve won the game!')
+            return True
+        if not self.hangman_pic:
+            print('You lost! Try again next time.')
+            return True
+        return False
             
