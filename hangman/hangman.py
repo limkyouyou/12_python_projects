@@ -15,8 +15,8 @@ class Hangman():
           ]
         self.eng_words = []
         self.user_chars = []
-        self.target_word = None
-        self.correct_chars = []
+        self.target_word = ['a', 'p', 'p', 'l', 'e']
+        self.correct_chars = ['_'] * len(self.target_word)
     
     def get_words_list(self):
         with open(self.filename) as file:
@@ -33,9 +33,11 @@ class Hangman():
             char = input('Type in an english letter: ').lower()
             if char not in ascii_lowercase:
                 print('That is not a valid letter. Please try again')
+                print()
             else:
                 if char in self.user_chars:
                     print('You\'ve already picked that letter. Plese try another letter.')
+                    print()
                 else:
                     return char
                 
@@ -52,9 +54,11 @@ class Hangman():
 
     def check_score(self):
         if self.target_word == self.correct_chars:
+            print()
             print('you\'ve won the game!')
             return True
         if not self.hangman_pic:
+            print()
             print('You lost! Try again next time.')
             return True
         return False
@@ -65,8 +69,29 @@ class Hangman():
         print(', '.join(self.user_chars), end='')
         print(' ]')
         print()
-        pic = self.hangman_pic.pop()
+        pic = self.hangman_pic[-1]
         print(pic)
         print()
         print(' '.join(self.correct_chars))
         print()
+
+    def execute(self):
+        #self.get_words_list()
+        #self.pick_word()
+        print()
+        print('Welcome to Hangman! Let\'s play a game.')
+        while True:
+            self.display_round()
+            char = self.char_input()
+            if self.check_char(char):
+                self.is_correct_char(char)
+                print('That is correct!')
+            else:
+                self.hangman_pic.pop()
+                print('That is incorrect.')
+            if self.check_score():
+                break
+            
+
+play_hangman = Hangman('english-nouns.txt')
+play_hangman.execute()
