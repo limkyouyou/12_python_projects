@@ -31,12 +31,12 @@ class Hangman():
     def char_input(self):
         while True:
             char = input('Type in an english letter: ').lower()
-            if char not in ascii_lowercase:
-                print('That is not a valid letter. Please try again')
+            if char == '' or char not in ascii_lowercase:
+                print('>> That is not a valid letter. Please try again')
                 print()
             else:
                 if char in self.user_chars:
-                    print('You\'ve already picked that letter. Plese try another letter.')
+                    print('>> You\'ve already picked that letter. Plese try another letter.')
                     print()
                 else:
                     return char
@@ -55,11 +55,11 @@ class Hangman():
     def check_score(self):
         if self.target_word == self.correct_chars:
             print()
-            print('you\'ve won the game!')
+            print('>> you\'ve won the game!')
             return True
         if not self.hangman_pic:
             print()
-            print('You lost! Try again next time.')
+            print('>> You lost! Try again next time.')
             return True
         return False
 
@@ -85,10 +85,10 @@ class Hangman():
             char = self.char_input()
             if self.check_char(char):
                 self.is_correct_char(char)
-                print('That is correct!')
+                print('>> That is correct!')
             else:
                 self.hangman_pic.pop()
-                print('That is incorrect.')
+                print('>> That is incorrect.')
             if self.check_score():
                 break
             
