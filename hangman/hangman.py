@@ -15,6 +15,7 @@ class Hangman():
           ]
         self.eng_words = []
         self.user_chars = []
+        self.target_word = None
         self.score = 0
     
     def get_words_list(self):
@@ -23,7 +24,7 @@ class Hangman():
                 self.eng_words.append(line.strip())
     
     def pick_word(self):
-        return list(choice(self.eng_words))
+        self.target_word = list(choice(self.eng_words))
     
     def char_input(self):
         while True:
