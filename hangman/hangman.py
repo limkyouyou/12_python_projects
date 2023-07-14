@@ -5,13 +5,13 @@ class Hangman():
     def __init__(self, filename):
         self.filename = filename
         self.hangman_pic = [
-            "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========", 
-            "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========", 
-            "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n========="
+            "       +---+\n       |   |\n       O   |\n      /|\  |\n      / \  |\n           |\n     =========",
+            "       +---+\n       |   |\n       O   |\n      /|\  |\n      /    |\n           |\n     =========",
+            "       +---+\n       |   |\n       O   |\n      /|\  |\n           |\n           |\n     =========",
+            "       +---+\n       |   |\n       O   |\n      /|   |\n           |\n           |\n     =========",
+            "       +---+\n       |   |\n       O   |\n       |   |\n           |\n           |\n     =========",
+            "       +---+\n       |   |\n       O   |\n           |\n           |\n           |\n     =========",
+            "       +---+\n       |   |\n           |\n           |\n           |\n           |\n     =========",
           ]
         self.eng_words = []
         self.user_chars = []
@@ -58,4 +58,15 @@ class Hangman():
             print('You lost! Try again next time.')
             return True
         return False
-            
+
+    def display_round(self):
+        print()
+        print('[ ', end='')
+        print(', '.join(self.user_chars), end='')
+        print(' ]')
+        print()
+        pic = self.hangman_pic.pop()
+        print(pic)
+        print()
+        print(' '.join(self.correct_chars))
+        print()
