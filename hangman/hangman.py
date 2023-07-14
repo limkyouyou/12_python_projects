@@ -23,7 +23,7 @@ class Hangman():
                 self.eng_words.append(line.strip())
     
     def pick_word(self):
-        return choice(self.eng_words)
+        return list(choice(self.eng_words))
     
     def char_input(self):
         while True:
