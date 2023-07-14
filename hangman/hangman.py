@@ -16,6 +16,7 @@ class Hangman():
         self.eng_words = []
         self.user_chars = []
         self.target_word = None
+        self.correct_chars = []
     
     def get_words_list(self):
         with open(self.filename) as file:
@@ -41,4 +42,7 @@ class Hangman():
             return True
         self.user_chars.append(char)
         return False
+    
+    def check_score(self):
+        
             
