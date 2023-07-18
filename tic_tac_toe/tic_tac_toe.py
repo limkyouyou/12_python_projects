@@ -98,10 +98,18 @@ class Tictactoe():
         spot = self.spot_input()
         self.num_board[spot] = self.players[player]
 
+    def switch_player(self):
+        if self.current_player == 1:
+            self.current_player = 2
+        else:
+            self.current_player = 1
+
     def exectue(self):
         self.print_board()
-        self.place_mark(self.current_player)
-        self.print_board()
+        while True:
+            self.place_mark(self.current_player)
+            self.switch_player()
+            self.print_board()
     
 test = Tictactoe()
 test.exectue()
