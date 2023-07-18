@@ -9,6 +9,21 @@ class Player():
     def get_move(self, game):
         pass
     
+class User(Player):
+    def __init__(self, marker):
+        self.marker = marker
+
+    def get_move(self, game):
+        while True:
+            try:
+                spot = int(input('Choose a spot: '))
+                if spot in game.available_spots():
+                    return spot
+                else:
+                    raise ValueError
+            except ValueError:
+                print('invalid spot, try again')
+    
 
 class Computer(Player):
     def __init__(self, marker):

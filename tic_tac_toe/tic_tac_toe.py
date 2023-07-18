@@ -1,4 +1,4 @@
-from player import Computer
+from player import Computer, User
 #board = [
 #    [['a', 1, 0], ['b', 1, None], ['c', 1, None]],
 #    [['a', 2, None], ['b', 2, None], ['c', 2, None]],
@@ -79,17 +79,6 @@ class Tictactoe():
     def available_spots(self):
         return [i for i, spot in enumerate(self.board) if spot != 'X' and spot != 'O']
 
-    def spot_input(self):
-        while True:
-            try:
-                spot = int(input('Choose a spot: '))
-                if spot in self.available_spots():
-                    return spot
-                else:
-                    raise ValueError
-            except ValueError:
-                print('invalid spot, try again')
-
     def print_board(self):
         res = []
         for i, spot in enumerate(self.board):
@@ -100,9 +89,8 @@ class Tictactoe():
         for row in [res[i * 3: (i + 1) * 3] for i in range(3)]:
             print('| ' + ' | '.join(row) + ' |')
 
-    def place_mark(self, player):
-        spot = self.spot_input()
-        self.board[spot] = self.players[player]
+    def place_mark(self, marker, spot):
+        self.board[spot] = marker
 
     def switch_player(self):
         self.current_player *= -1
@@ -128,24 +116,22 @@ class Tictactoe():
         return False
             
     def exectue(self):
-        self.print_board()
-        while True:
-            self.place_mark(self.current_player)
-            self.switch_player()
-            self.print_board()
-            winner = self.check_winner()
-            if winner:
-                print(f'The winner is {self.players[winner]}')
-                break
+        pass
 
     
 test = Tictactoe()
-test.place_mark(1)
-test.place_mark(-1)
-test.place_mark(1)
-
-comp = Computer('X')
-move = comp.get_move(game=test)
+user = User('X')
+#test.place_mark(1)
+#test.place_mark(-1)
+#test.place_mark(1)
+#
+#comp = Computer('X')
+#move = comp.get_move(game=test)
 
 test.print_board()
-print(move)
+move = user.get_move(game=test)
+test.place_mark(marker=user.marker, spot=move)
+test.print_board()
+move = user.get_move(game=test)
+test.place_mark(marker=user.marker, spot=move)
+test.print_board()
