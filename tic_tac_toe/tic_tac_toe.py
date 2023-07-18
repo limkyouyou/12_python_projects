@@ -69,12 +69,12 @@
 
 class Tictactoe():
     def __init__(self):
-        self.num_board = [str(i) for i in range(9)]
+        self.num_board = ['_' for i in range(9)]
         self.players = {
-            1: 'X',
-            2: 'O'
+            -1: 'X',
+            1: 'O'
         }
-        self.current_player = 1
+        self.current_player = -1
 
     def available_spots(self):
         return [i for i, spot in enumerate(self.num_board) if spot != 'X' and spot != 'O']
@@ -99,17 +99,42 @@ class Tictactoe():
         self.num_board[spot] = self.players[player]
 
     def switch_player(self):
-        if self.current_player == 1:
-            self.current_player = 2
-        else:
-            self.current_player = 1
+        self.current_player *= -1
 
+    def get_row(self):
+        board = self.num_board
+        row_check = [board[i * 3:(i + 1) * 3] for i in range(3)]
+        return row_check
+        
+    def get_col(self):
+        board = self.num_board
+        col_check = [[board[i], board[i + 3], board[i + 6]] for i in range(3)]
+        return col_check
+    
+    def get_cross(self):
+        board = self.num_board
+        cross_check = [[board[i], board[i + (4 - i)], board[i + 2 * (4 - i)]] for i in [0, 2]]
+        return cross_check
+            
+    def check_winner(self):
+        get_total = self.get_row() + self.get_col() + self.get_cross()
+        for player in self.players:
+            check_total = filter(lambda item: self.players[player] not in item and '_' not in item, get_total)
+            for i in check_total:
+                return -(player)
+        return False
+            
     def exectue(self):
         self.print_board()
         while True:
             self.place_mark(self.current_player)
             self.switch_player()
             self.print_board()
+            winner = self.check_winner()
+            if winner:
+                print(f'The winner is {self.players[winner]}')
+                break
+
     
 test = Tictactoe()
 test.exectue()
