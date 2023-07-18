@@ -85,7 +85,9 @@ class Tictactoe():
                 spot = int(input('Choose a spot: '))
                 if spot in self.available_spots():
                     return spot
-            except:
+                else:
+                    raise ValueError
+            except ValueError:
                 print('invalid spot, try again')
 
     def print_board(self):
