@@ -81,10 +81,11 @@ class Tictactoe():
 
     def spot_input(self):
         while True:
-            spot = int(input('Choose a spot: '))
-            if spot in self.available_spots():
-                return spot
-            else:
+            try:
+                spot = int(input('Choose a spot: '))
+                if spot in self.available_spots():
+                    return spot
+            except:
                 print('invalid spot, try again')
 
     def print_board(self):
