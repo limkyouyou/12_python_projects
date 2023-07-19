@@ -68,11 +68,13 @@ from player import Computer, User
 #    - check that can get two doubles
 
 class Tictactoe():
-    def __init__(self):
+    def __init__(self, p_1, p_2):
         self.board = ['_' for i in range(9)]
+        self.p_1 = p_1
+        self.p_2 = p_2
         self.players = {
-            -1: 'X',
-            1: 'O'
+            -1: self.p_1,
+            1: self.p_2
         }
         self.current_player = -1
 
@@ -80,6 +82,10 @@ class Tictactoe():
         return [i for i, spot in enumerate(self.board) if spot != 'X' and spot != 'O']
 
     def print_board(self):
+        for row in [self.board[i * 3: (i + 1) * 3] for i in range(3)]:
+            print('| ' + ' | '.join(row) + ' |')
+
+    def print_num_board(self):
         res = []
         for i, spot in enumerate(self.board):
             if spot == '_':
@@ -110,28 +116,71 @@ class Tictactoe():
     def check_winner(self):
         get_total = self.get_row(self.board) + self.get_col(self.board) + self.get_cross(self.board)
         for player in self.players:
-            check_total = filter(lambda item: self.players[player] not in item and '_' not in item, get_total)
+            check_total = filter(lambda item: self.players[player].marker not in item and '_' not in item, get_total)
             for i in check_total:
                 return -(player)
         return False
             
-    def exectue(self):
-        pass
+    @classmethod
+    def get_player(cls):
+        res = []
+        for marker in ['X', 'O']:
+            while True:
+                try:
+                    player = input(f'Who will be the "{marker}"? Computer (C) or Human (H): ').lower()
+                    if player == 'c' or player == 'h':
+                        res.append(player)
+                        break
+                    raise ValueError
+                except ValueError:
+                    print('>> Invalid input, enter C for Computer or H for Human.')
+        return res
+def play():
+    print()
+    print('>> Welcome to tic-Tac-Toe!')
+    print()
+    print('>> Please select players. "X" will start first.')
 
+    input_p1, input_p2 = Tictactoe.get_player()
+    if input_p1 == 'c':
+        p_1 = Computer('X')
+    else:
+        p_1 = User('X')
+    if input_p2 == 'C':
+        p_2 = Computer('O')
+    else:
+        p_2 = User('O')
+
+    game = Tictactoe(p_1=p_1, p_2=p_2)
+
+    available_space = game.available_spots()
+
+    while available_space:
+        current_player = game.players[game.current_player]
+        print()
+        move = current_player.get_move(game=game)
+        game.place_mark(marker=current_player.marker, spot=move)
+        print()
+        game.print_board()
+        print(f'>> {current_player.marker} takes square {move}')
+        winner = game.check_winner()
+        if winner:
+            print()
+            print(f'>> The winner is {game.players[winner].marker}!')
+            return
+        available_space = game.available_spots()
+        game.switch_player()
+    print()
+    print('>> The game ends with draw.')
+
+
+
+#    players = {
+#        -1: p_1,
+#        1: p_2
+#    }
+#    current_player = -1
+#    while available_space:
+#        pass
     
-test = Tictactoe()
-user = User('X')
-#test.place_mark(1)
-#test.place_mark(-1)
-#test.place_mark(1)
-#
-#comp = Computer('X')
-#move = comp.get_move(game=test)
-
-test.print_board()
-move = user.get_move(game=test)
-test.place_mark(marker=user.marker, spot=move)
-test.print_board()
-move = user.get_move(game=test)
-test.place_mark(marker=user.marker, spot=move)
-test.print_board()
+play()

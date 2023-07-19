@@ -14,6 +14,7 @@ class User(Player):
         self.marker = marker
 
     def get_move(self, game):
+        game.print_num_board()
         while True:
             try:
                 spot = int(input('Choose a spot: '))
@@ -29,9 +30,9 @@ class Computer(Player):
     def __init__(self, marker):
         super().__init__(marker)
 
-    def get_opponent(self, marker, game):
+    def get_opponent(self, game):
         for key, value in game.players.items():
-            if value != marker:
+            if value.marker != self.marker:
                 return key
 
     def get_total_list(self, game):
@@ -62,8 +63,8 @@ class Computer(Player):
         return res
 
     def get_move(self, game):
-        opponent = self.get_opponent(self.marker, game)
-        opponent_marker = game.players[opponent]
+        opponent = self.get_opponent(game)
+        opponent_marker = game.players[opponent].marker
         total_list = self.get_total_list(game=game)
 
         my_list = self.filter_list(total_list=total_list, marker=self.marker, opponent=opponent_marker)
