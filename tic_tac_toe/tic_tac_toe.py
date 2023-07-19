@@ -143,15 +143,14 @@ def play():
 
     input_p1, input_p2 = Tictactoe.get_player()
     if input_p1 == 'c':
-        p_1 = Computer('X')
+        p_1 = Computer(marker='X', difficulty=2)
     else:
-        p_1 = User('X')
+        p_1 = User(marker='X')
     if input_p2 == 'c':
-        p_2 = Computer('O')
+        p_2 = Computer(marker='O', difficulty=2)
     else:
-        p_2 = User('O')
-    print(p_1)
-    print(p_2)
+        p_2 = User(marker='O')
+
     game = Tictactoe(p_1=p_1, p_2=p_2)
 
     available_space = game.available_spots()
@@ -174,14 +173,5 @@ def play():
     print()
     print('>> The game ends with draw.')
 
-
-
-#    players = {
-#        -1: p_1,
-#        1: p_2
-#    }
-#    current_player = -1
-#    while available_space:
-#        pass
     
 play()
