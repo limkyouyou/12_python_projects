@@ -132,43 +132,44 @@ class Tictactoe():
             except ValueError:
                 print('>> Invalid input')
 
-def play():
-    print()
-    print('>> Welcome to tic-Tac-Toe!')
-    print()
-    print('>> Please select players. "X" will start first.')
-
-    players = []
-    for mark in ('X', 'O'):
-        input = Tictactoe.get_player(mark)
-        if input == 'c':
-            difficulty = Computer.get_diff_input()
-            players.append(Computer(marker=mark, difficulty=difficulty))
-        else:
-            players.append(User(marker=mark))
-
-    p_1, p_2 = players
-    game = Tictactoe(p_1=p_1, p_2=p_2)
-
-    available_space = game.available_spots()
-
-    while available_space:
-        current_player = game.players[game.current_player]
+    @classmethod
+    def execute(cls):
         print()
-        move = current_player.get_move(game=game)
-        game.place_mark(marker=current_player.marker, spot=move)
+        print('>> Welcome to tic-Tac-Toe!')
         print()
-        game.print_board()
-        print(f'>> {current_player.marker} takes square {move}')
-        winner = game.check_winner()
-        if winner:
-            print()
-            print(f'>> The winner is {game.players[winner].marker}!')
-            return
+        print('>> Please select players. "X" will start first.')
+
+        players = []
+        for mark in ('X', 'O'):
+            input = Tictactoe.get_player(mark)
+            if input == 'c':
+                difficulty = Computer.get_diff_input()
+                players.append(Computer(marker=mark, difficulty=difficulty))
+            else:
+                players.append(User(marker=mark))
+
+        p_1, p_2 = players
+        game = Tictactoe(p_1=p_1, p_2=p_2)
+
         available_space = game.available_spots()
-        game.switch_player()
-    print()
-    print('>> The game ends with draw.')
 
-    
-play()
+        while available_space:
+            current_player = game.players[game.current_player]
+            print()
+            move = current_player.get_move(game=game)
+            game.place_mark(marker=current_player.marker, spot=move)
+            print()
+            game.print_board()
+            print(f'>> {current_player.marker} takes square {move}')
+            winner = game.check_winner()
+            if winner:
+                print()
+                print(f'>> The winner is {game.players[winner].marker}!')
+                return
+            available_space = game.available_spots()
+            game.switch_player()
+        print()
+        print('>> The game ends with draw.')
+
+if __name__ == '__main__':
+    Tictactoe.execute()
