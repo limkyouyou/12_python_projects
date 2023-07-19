@@ -1,6 +1,6 @@
 
 from collections import Counter
-from random import choice, shuffle
+from random import choice
 
 class Player():
     def __init__(self, marker):
