@@ -146,11 +146,12 @@ def play():
         p_1 = Computer('X')
     else:
         p_1 = User('X')
-    if input_p2 == 'C':
+    if input_p2 == 'c':
         p_2 = Computer('O')
     else:
         p_2 = User('O')
-
+    print(p_1)
+    print(p_2)
     game = Tictactoe(p_1=p_1, p_2=p_2)
 
     available_space = game.available_spots()
