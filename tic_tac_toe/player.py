@@ -61,11 +61,22 @@ class Computer(Player):
             for item in flat_single:
                 if item not in res: res.append(item)
         return res
+    
+    def get_random_spot(self, game):
+        avail_spots = game.available_spots()
+        anchor = 0
+        n = len(avail_spots)
+        for i in range(n):
+            if avail_spots[i] % 2 == 0:
+                avail_spots[i], avail_spots[anchor] = avail_spots[anchor], avail_spots[i]
+                anchor += 1
+        return choice(avail_spots[:anchor]) if anchor else choice(avail_spots)
 
     def get_move(self, game):
-        opponent = self.get_opponent(game)
+        opponent = self.get_opponent(game=game)
         opponent_marker = game.players[opponent].marker
         total_list = self.get_total_list(game=game)
+        print('total list ', total_list)
 
         my_list = self.filter_list(total_list=total_list, marker=self.marker, opponent=opponent_marker)
         my_double_list = self.filter_double(filtered_list=my_list, marker=self.marker)
@@ -78,4 +89,5 @@ class Computer(Player):
         priority_list = my_double_list + opponent_double_list + my_single_list + opponent_single_list
         if priority_list:
             return priority_list[0]
-        return choice([x for x in range(9) if x % 2 == 0])
+        
+        return self.get_random_spot(game)
