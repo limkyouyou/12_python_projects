@@ -122,35 +122,32 @@ class Tictactoe():
         return False
             
     @classmethod
-    def get_player(cls):
-        res = []
-        for marker in ['X', 'O']:
-            while True:
-                try:
-                    player = input(f'Who will be the "{marker}"? Computer (C) or Human (H): ').lower()
-                    if player == 'c' or player == 'h':
-                        res.append(player)
-                        break
-                    raise ValueError
-                except ValueError:
-                    print('>> Invalid input, enter C for Computer or H for Human.')
-        return res
+    def get_player(cls, marker):
+        while True:
+            try:
+                player = input(f'Who will be the "{marker}"? Computer (C) or Human (H): ').lower()
+                if player == 'c' or player == 'h':
+                    return player
+                raise ValueError
+            except ValueError:
+                print('>> Invalid input')
+
 def play():
     print()
     print('>> Welcome to tic-Tac-Toe!')
     print()
     print('>> Please select players. "X" will start first.')
 
-    input_p1, input_p2 = Tictactoe.get_player()
-    if input_p1 == 'c':
-        p_1 = Computer(marker='X', difficulty=2)
-    else:
-        p_1 = User(marker='X')
-    if input_p2 == 'c':
-        p_2 = Computer(marker='O', difficulty=2)
-    else:
-        p_2 = User(marker='O')
+    players = []
+    for mark in ('X', 'O'):
+        input = Tictactoe.get_player(mark)
+        if input == 'c':
+            difficulty = Computer.get_diff_input()
+            players.append(Computer(marker=mark, difficulty=difficulty))
+        else:
+            players.append(User(marker=mark))
 
+    p_1, p_2 = players
     game = Tictactoe(p_1=p_1, p_2=p_2)
 
     available_space = game.available_spots()

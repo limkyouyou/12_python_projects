@@ -17,7 +17,7 @@ class User(Player):
         game.print_num_board()
         while True:
             try:
-                spot = int(input('Choose a spot: '))
+                spot = int(input('Choose a sqaure: '))
                 if spot in game.available_spots():
                     return spot
                 else:
@@ -30,6 +30,17 @@ class Computer(Player):
     def __init__(self, marker, difficulty):
         super().__init__(marker)
         self.difficulty = difficulty
+
+    @classmethod
+    def get_diff_input(cls):
+        while True:
+            try:
+                diff_input = int(input('Choose a level. Easy (0), Medium (1), Impossible (2): '))
+                if diff_input not in (0, 1, 2):
+                    raise ValueError
+                return diff_input
+            except ValueError:
+                print('>> Invalid input')
 
     def get_opponent(self, game):
         for key, value in game.players.items():
@@ -95,6 +106,9 @@ class Computer(Player):
                 opponent_list = self.filter_list(total_list=total_list, marker=opponent_marker, opponent=self.marker)
                 opponent_double_list = self.filter_double(filtered_list=opponent_list, marker=opponent_marker)
                 priority_list += opponent_double_list
+
+            if not priority_list and self.difficulty > 1 and 4 in game.available_spots():
+                priority_list += [4]
 
             if not priority_list:
                 my_single_list = self.filter_single(filtered_list=my_list, marker=self.marker)
